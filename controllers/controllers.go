@@ -57,7 +57,7 @@ func FindOne(email, password string) map[string]interface{} {
         expiresAt := time.Now().Add(time.Minute * 100000).Unix()
 
         // Check password match
-        err = bcrypt.CompareHashAndPassword([]byte(user.Password), []byte(password))
+        err := bcrypt.CompareHashAndPassword([]byte(user.Password), []byte(password))
         if err != nil && err == bcrypt.ErrMismatchedHashAndPassword {
                 resp := map[string]interface{}{
                         "status": false,
