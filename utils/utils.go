@@ -5,7 +5,6 @@ import (
         "log"
         "os"
         "context"
-        "time"
 
         "github.com/jinzhu/gorm"
         _ "github.com/jinzhu/gorm/dialects/postgres"
@@ -55,7 +54,7 @@ func NewMongoClient() (*mongo.Client, *context.Context) {
         }
 
         // Get context
-        ctx, _ := context.WithTimeout(context.Background(), 10*time.Second)
+        ctx, _ := context.WithCancel(context.Background())
         err = client.Connect(ctx)
         if err != nil {
                 log.Fatalln(err)
