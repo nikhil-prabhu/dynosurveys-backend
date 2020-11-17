@@ -24,9 +24,9 @@ type error interface {
 }
 
 // PostgreSQL DB Client
-var pdb = utils.NewPostgreClient()
+var PDB = utils.NewPostgreClient()
 // MongoDB client and context
-var mdb, ctx = utils.NewMongoClient()
+var MDB, Ctx = utils.NewMongoClient()
 
 // Login attempts to log in a user and writes
 // the response
@@ -51,7 +51,7 @@ func FindOne(email, password string) map[string]interface{} {
         user := &models.User{}
 
         // Search the database
-        if err := pdb.Where("Email = ?", email).First(user).Error; err != nil {
+        if err := PDB.Where("Email = ?", email).First(user).Error; err != nil {
                 resp := map[string]interface{}{
                         "status": false,
                         "message": "Email address not found.",
@@ -113,7 +113,7 @@ func CreateUser(w http.ResponseWriter, r *http.Request) {
 
         user.Password = string(pass)
 
-        createdUser := pdb.Create(user)
+        createdUser := PDB.Create(user)
 
         if createdUser.Error != nil {
                 fmt.Println(createdUser.Error)
@@ -133,12 +133,12 @@ func RecordFormResponse(w http.ResponseWriter, r *http.Request) {
                         return
                 }
                 // Create database for forms if doesn't exist
-                formsDatabase := mdb.Database("forms")
+                formsDatabase := MDB.Database("forms")
                 // Create collection with form ID as name if doesn't exist
                 responseCollection := formsDatabase.Collection(resp["form_id"].(string))
 
                 // Insert response into DB
-                insertResult, err := responseCollection.InsertOne(*ctx, resp)
+                insertResult, err := responseCollection.InsertOne(*Ctx, resp)
                 if err != nil {
                         log.Fatalln(err)
                 }
