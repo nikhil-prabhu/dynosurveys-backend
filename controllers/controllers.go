@@ -7,6 +7,7 @@ import (
         "fmt"
         "net/http"
         "time"
+        "log"
 
         jwt "github.com/dgrijalva/jwt-go"
         "golang.org/x/crypto/bcrypt"
@@ -24,6 +25,8 @@ type error interface {
 
 // PostgreSQL DB Client
 var pdb = utils.NewPostgreClient()
+// MongoDB client and context
+var mdb, ctx = utils.NewMongoClient()
 
 // Login attempts to log in a user and writes
 // the response
@@ -116,4 +119,31 @@ func CreateUser(w http.ResponseWriter, r *http.Request) {
                 fmt.Println(createdUser.Error)
         }
         json.NewEncoder(w).Encode(createdUser)
+}
+
+// RecordFormResponse stores the response of a form
+// into the MongoDB database.
+func RecordFormResponse(w http.ResponseWriter, r *http.Request) {
+        switch r.Method {
+        case "POST":
+                var resp map[string]interface{}
+                err := json.NewDecoder(r.Body).Decode(&resp)
+                if err != nil {
+                        http.Error(w, err.Error(), http.StatusBadRequest)
+                        return
+                }
+                // Create database for forms if doesn't exist
+                formsDatabase := mdb.Database("forms")
+                // Create collection with form ID as name if doesn't exist
+                responseCollection := formsDatabase.Collection(resp["form_id"].(string))
+
+                // Insert response into DB
+                insertResult, err := responseCollection.InsertOne(*ctx, resp)
+                if err != nil {
+                        log.Fatalln(err)
+                }
+
+                // Print Object ID
+                fmt.Println(insertResult)
+        }
 }
