@@ -10,9 +10,9 @@ import (
         "github.com/joho/godotenv"
 )
 
-// ConnectDB connects to a database and returns
-// the connection object.
-func ConnectDB() *gorm.DB {
+// NewPostgreClient connects to a PostgreSQL database
+// and returns the connection object.
+func NewPostgreClient() *gorm.DB {
         // Load dbURI from environment
         err := godotenv.Load()
         if err != nil {
