@@ -62,3 +62,13 @@ func NewMongoClient() (*mongo.Client, *context.Context) {
 
         return client, &ctx
 }
+
+// ClosePostgreClient closes a PostgreSQL connection.
+func ClosePostgreClient(client *gorm.DB) {
+        client.Close()
+}
+
+// CloseMongoclient closes a MongoDB connection.
+func CloseMongoClient(client *mongo.Client, ctx *context.Context) {
+        client.Disconnect(*ctx)
+}
