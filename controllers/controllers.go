@@ -35,6 +35,7 @@ func Login(w http.ResponseWriter, r *http.Request) {
                         "status": false,
                         "message": "Invalid request.",
                 }
+                json.NewEncoder(w).Encode(resp)
                 return
         }
         resp := FindOne(user.Email, user.Password)
