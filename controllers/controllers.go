@@ -11,6 +11,7 @@ import (
 
         jwt "github.com/dgrijalva/jwt-go"
         "golang.org/x/crypto/bcrypt"
+        "go.mongodb.org/mongo-driver/bson"
 )
 
 // ErrorResponse structure
@@ -145,5 +146,39 @@ func RecordFormResponse(w http.ResponseWriter, r *http.Request) {
 
                 // Print Object ID
                 fmt.Println(insertResult)
+        }
+}
+
+// FetchFormResponses retrieves the responses of a
+// form from the MongoDB database.
+func FetchFormResponses(w http.ResponseWriter, r *http.Request) {
+        switch r.Method {
+        case "POST":
+                var resp map[string]interface{}
+                err := json.NewDecoder(r.Body).Decode(&resp)
+                if err != nil {
+                        http.Error(w, err.Error(), http.StatusBadRequest)
+                        return
+                }
+
+                // Forms database
+                formsDatabase := MDB.Database("forms")
+                // Collection of responses
+                responseCollection := formsDatabase.Collection(resp["form_id"].(string))
+
+                // Create cursor for collection
+                cursor, err := responseCollection.Find(*Ctx, bson.M{})
+                if err != nil {
+                        log.Fatalln(err)
+                }
+
+                // Slice to store responses
+                var responses []bson.M
+
+                if err = cursor.All(*Ctx, &responses); err != nil {
+                        log.Fatalln(err)
+                }
+                // Write responses
+                json.NewEncoder(w).Encode(responses)
         }
 }
