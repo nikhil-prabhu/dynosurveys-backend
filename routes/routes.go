@@ -15,6 +15,7 @@ func Handlers() *mux.Router {
         r.HandleFunc("/register", controllers.CreateUser).Methods("POST")
         r.HandleFunc("/login", controllers.Login).Methods("POST")
         r.HandleFunc("/record_response", controllers.RecordFormResponse).Methods("POST")
+        r.HandleFunc("/fetch_responses", controllers.FetchFormResponses).Methods("POST")
 
         return r
 }
