@@ -28,6 +28,8 @@ type error interface {
 var PDB = utils.NewPostgreClient()
 // MongoDB client and context
 var MDB, Ctx = utils.NewMongoClient()
+// MongoDB database for forms
+var formsDatabase = MDB.Database("forms")
 
 // Login attempts to log in a user and writes
 // the response
@@ -133,8 +135,7 @@ func RecordFormResponse(w http.ResponseWriter, r *http.Request) {
                         http.Error(w, err.Error(), http.StatusBadRequest)
                         return
                 }
-                // Create database for forms if doesn't exist
-                formsDatabase := MDB.Database("forms")
+
                 // Create collection with form ID as name if doesn't exist
                 responseCollection := formsDatabase.Collection(resp["form_id"].(string))
 
@@ -161,8 +162,6 @@ func FetchFormResponses(w http.ResponseWriter, r *http.Request) {
                         return
                 }
 
-                // Forms database
-                formsDatabase := MDB.Database("forms")
                 // Collection of responses
                 responseCollection := formsDatabase.Collection(resp["form_id"].(string))
 
@@ -174,7 +173,6 @@ func FetchFormResponses(w http.ResponseWriter, r *http.Request) {
 
                 // Slice to store responses
                 var responses []bson.M
-
                 if err = cursor.All(*Ctx, &responses); err != nil {
                         log.Fatalln(err)
                 }
