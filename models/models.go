@@ -15,6 +15,14 @@ type User struct {
         Password        string `json:"Password"`
 }
 
+// Form structure
+type Form struct {
+        gorm.Model
+
+        FormID          string `gorm:"type:varchar(100);primaryKey" json:"form_id"`
+        UserID          uint `gorm:"foreignKey:UserID" json:"user_id"`
+}
+
 // Token structure
 type Token struct {
         UserID  uint
