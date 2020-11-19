@@ -2,6 +2,7 @@ package routes
 
 import (
         "../controllers"
+        "../auth"
         "net/http"
 
         "github.com/gorilla/mux"
@@ -12,10 +13,15 @@ func Handlers() *mux.Router {
         r := mux.NewRouter().StrictSlash(true)
         r.Use(CommonMiddleware)
 
+        // Routes
         r.HandleFunc("/register", controllers.CreateUser).Methods("POST")
         r.HandleFunc("/login", controllers.Login).Methods("POST")
         r.HandleFunc("/record_response", controllers.RecordFormResponse).Methods("POST")
-        r.HandleFunc("/fetch_responses", controllers.FetchFormResponses).Methods("POST")
+
+        // Subroutes
+        s := r.PathPrefix("/forms").Subrouter()
+        s.Use(auth.JWTVerify)   // Verify token
+        s.HandleFunc("/fetch_responses", controllers.FetchFormResponses).Methods("POST")
 
         return r
 }
