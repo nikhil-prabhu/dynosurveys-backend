@@ -124,6 +124,19 @@ func CreateUser(w http.ResponseWriter, r *http.Request) {
         json.NewEncoder(w).Encode(createdUser)
 }
 
+// CreateForm creates a new form in the database
+func CreateForm(w http.ResponseWriter, r *http.Request) {
+        form := &models.Form{}
+        json.NewDecoder(r.Body).Decode(form)
+
+        createdForm := PDB.Create(form)
+
+        if createdForm.Error != nil {
+                fmt.Println(createdForm.Error)
+        }
+        json.NewEncoder(w).Encode(createdForm)
+}
+
 // RecordFormResponse stores the response of a form
 // into the MongoDB database.
 func RecordFormResponse(w http.ResponseWriter, r *http.Request) {
