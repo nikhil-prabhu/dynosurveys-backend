@@ -22,6 +22,7 @@ func Handlers() *mux.Router {
         s := r.PathPrefix("/forms").Subrouter()
         s.Use(auth.JWTVerify)   // Verify token
         s.HandleFunc("/fetch_responses", controllers.FetchFormResponses).Methods("POST")
+        s.HandleFunc("/create_form", controllers.CreateForm).Methods("POST")
 
         return r
 }
