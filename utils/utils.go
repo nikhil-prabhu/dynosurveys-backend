@@ -32,6 +32,7 @@ func NewPostgreClient() *gorm.DB {
 
         // Migrate the schema
         db.AutoMigrate(&models.User{})
+        db.AutoMigrate(&models.Form{})
         return db
 }
 
