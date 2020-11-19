@@ -46,7 +46,7 @@ func NewMongoClient() (*mongo.Client, *context.Context) {
                 log.Fatalln(err)
         }
 
-        mongoURI := os.Getenv("mongoURI")
+        mongoURI := os.Getenv("MongoURI")
 
         // Create client
         client, err := mongo.NewClient(options.Client().ApplyURI(mongoURI))
