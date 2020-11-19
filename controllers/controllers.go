@@ -163,6 +163,20 @@ func RecordFormResponse(w http.ResponseWriter, r *http.Request) {
         }
 }
 
+// ListForms retrieves a list of forms from the forms
+// database that match a particular user_id
+func ListForms(w http.ResponseWriter, r *http.Request) {
+        switch r.Method {
+        case "POST":
+                var forms []models.Form
+                var resp map[string]interface{}
+                json.NewDecoder(r.Body).Decode(&resp)
+                PDB.Where("user_id = ?", resp["user_id"]).Find(&forms)
+
+                json.NewEncoder(w).Encode(forms)
+        }
+}
+
 // FetchFormResponses retrieves the responses of a
 // form from the MongoDB database.
 func FetchFormResponses(w http.ResponseWriter, r *http.Request) {
