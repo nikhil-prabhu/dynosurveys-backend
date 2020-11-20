@@ -1,3 +1,4 @@
+// Package utils provides database utility function.
 package utils
 
 import (

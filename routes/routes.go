@@ -1,3 +1,5 @@
+// Package routes implements a router that maps controllers
+// onto various routes and subroutes.
 package routes
 
 import (

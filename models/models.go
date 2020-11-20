@@ -1,3 +1,5 @@
+// Package models defines database schemas
+// and custom models.
 package models
 
 import (

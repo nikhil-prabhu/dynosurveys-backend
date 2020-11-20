@@ -1,3 +1,5 @@
+// Package controllers provides controller functions
+// for interacting with the dynosurveys backend databases.
 package controllers
 
 import (

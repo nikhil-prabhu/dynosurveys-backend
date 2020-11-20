@@ -1,3 +1,5 @@
+// Package auth provides authentication functions for the
+// dynosurveys backend server.
 package auth
 
 import (
