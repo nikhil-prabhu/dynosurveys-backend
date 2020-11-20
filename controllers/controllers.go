@@ -24,11 +24,13 @@ type error interface {
         Error() string
 }
 
-// PostgreSQL DB Client
+// PDB represents the PostgreSQL DB Client
 var PDB = utils.NewPostgreClient()
 
-// MongoDB client and context
-var MDB, Ctx = utils.NewMongoClient()
+// MDB represents the MongoDB client
+var MDB, tmp = utils.NewMongoClient()
+// Ctx represents the MongoDB context
+var Ctx = tmp
 
 // MongoDB database for forms
 var formsDatabase = MDB.Database("forms")

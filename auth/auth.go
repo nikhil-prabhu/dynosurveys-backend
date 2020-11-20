@@ -10,6 +10,9 @@ import (
         "github.com/nikhil-prabhu/dynosurveys-backend/models"
 )
 
+// Context key
+type key string
+
 // JWTVerify verifies the JWT token and returns
 // an HTTP handler object.
 func JWTVerify(next http.Handler) http.Handler {
@@ -39,7 +42,8 @@ func JWTVerify(next http.Handler) http.Handler {
                         return
                 }
 
-                ctx := context.WithValue(r.Context(), "user", tk)
+                var ctxKey key = "user"
+                ctx := context.WithValue(r.Context(), ctxKey, tk)
                 next.ServeHTTP(w, r.WithContext(ctx))
         })
 }

@@ -6,7 +6,7 @@ import (
         "os"
 
         "github.com/jinzhu/gorm"
-        _ "github.com/jinzhu/gorm/dialects/postgres"
+        _ "github.com/jinzhu/gorm/dialects/postgres" // Register postgres as a dialect
         "github.com/joho/godotenv"
         "github.com/nikhil-prabhu/dynosurveys-backend/models"
         "go.mongodb.org/mongo-driver/mongo"
@@ -69,7 +69,7 @@ func ClosePostgreClient(client *gorm.DB) {
         client.Close()
 }
 
-// CloseMongoclient closes a MongoDB connection.
+// CloseMongoClient closes a MongoDB connection.
 func CloseMongoClient(client *mongo.Client, ctx *context.Context) {
         client.Disconnect(*ctx)
 }
