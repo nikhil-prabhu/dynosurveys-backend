@@ -1,13 +1,13 @@
 package auth
 
 import (
-        "../models"
         "context"
         "encoding/json"
         "net/http"
         "strings"
 
         jwt "github.com/dgrijalva/jwt-go"
+        "github.com/nikhil-prabhu/dynosurveys-backend/models"
 )
 
 // JWTVerify verifies the JWT token and returns

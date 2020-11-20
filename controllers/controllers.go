@@ -1,8 +1,6 @@
 package controllers
 
 import (
-        "../models"
-        "../utils"
         "encoding/json"
         "fmt"
         "net/http"
@@ -12,6 +10,8 @@ import (
         jwt "github.com/dgrijalva/jwt-go"
         "golang.org/x/crypto/bcrypt"
         "go.mongodb.org/mongo-driver/bson"
+        "github.com/nikhil-prabhu/dynosurveys-backend/models"
+        "github.com/nikhil-prabhu/dynosurveys-backend/utils"
 )
 
 // ErrorResponse structure

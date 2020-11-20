@@ -1,11 +1,11 @@
 package routes
 
 import (
-        "../controllers"
-        "../auth"
         "net/http"
 
         "github.com/gorilla/mux"
+        "github.com/nikhil-prabhu/dynosurveys-backend/controllers"
+        "github.com/nikhil-prabhu/dynosurveys-backend/auth"
 )
 
 // Handlers defines and returns a router object
