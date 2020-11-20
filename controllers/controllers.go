@@ -26,8 +26,10 @@ type error interface {
 
 // PostgreSQL DB Client
 var PDB = utils.NewPostgreClient()
+
 // MongoDB client and context
 var MDB, Ctx = utils.NewMongoClient()
+
 // MongoDB database for forms
 var formsDatabase = MDB.Database("forms")
 
@@ -38,7 +40,7 @@ func Login(w http.ResponseWriter, r *http.Request) {
         err := json.NewDecoder(r.Body).Decode(user)
         if err != nil {
                 resp := map[string]interface{}{
-                        "status": false,
+                        "status":  false,
                         "message": "Invalid request.",
                 }
                 json.NewEncoder(w).Encode(resp)
@@ -56,7 +58,7 @@ func FindOne(email, password string) map[string]interface{} {
         // Search the database
         if err := PDB.Where("Email = ?", email).First(user).Error; err != nil {
                 resp := map[string]interface{}{
-                        "status": false,
+                        "status":  false,
                         "message": "Email address not found.",
                 }
                 return resp
@@ -67,7 +69,7 @@ func FindOne(email, password string) map[string]interface{} {
         err := bcrypt.CompareHashAndPassword([]byte(user.Password), []byte(password))
         if err != nil && err == bcrypt.ErrMismatchedHashAndPassword {
                 resp := map[string]interface{}{
-                        "status": false,
+                        "status":  false,
                         "message": "Incorrect password.",
                 }
                 return resp
@@ -76,8 +78,8 @@ func FindOne(email, password string) map[string]interface{} {
         // JWT token
         tk := &models.Token{
                 UserID: user.ID,
-                Name: user.Name,
-                Email: user.Email,
+                Name:   user.Name,
+                Email:  user.Email,
                 StandardClaims: &jwt.StandardClaims{
                         ExpiresAt: expiresAt,
                 },
@@ -91,7 +93,7 @@ func FindOne(email, password string) map[string]interface{} {
         }
 
         resp := map[string]interface{}{
-                "status": false,
+                "status":  false,
                 "message": "Logged in.",
         }
         resp["token"] = tokenString

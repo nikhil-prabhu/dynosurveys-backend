@@ -50,7 +50,7 @@ func handleInterrupts() {
         // Goroutine that blocks till signal is
         // received on channel
         go func() {
-                <- ch
+                <-ch
                 log.Println("Server terminated. Exiting...")
                 os.Exit(0)
         }()
