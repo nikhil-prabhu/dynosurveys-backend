@@ -1,8 +1,8 @@
 package models
 
 import (
-        "github.com/jinzhu/gorm"
         jwt "github.com/dgrijalva/jwt-go"
+        "github.com/jinzhu/gorm"
 )
 
 // User data structure

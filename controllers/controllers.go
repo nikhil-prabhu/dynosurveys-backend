@@ -3,15 +3,15 @@ package controllers
 import (
         "encoding/json"
         "fmt"
+        "log"
         "net/http"
         "time"
-        "log"
 
         jwt "github.com/dgrijalva/jwt-go"
-        "golang.org/x/crypto/bcrypt"
-        "go.mongodb.org/mongo-driver/bson"
         "github.com/nikhil-prabhu/dynosurveys-backend/models"
         "github.com/nikhil-prabhu/dynosurveys-backend/utils"
+        "go.mongodb.org/mongo-driver/bson"
+        "golang.org/x/crypto/bcrypt"
 )
 
 // ErrorResponse structure

@@ -4,8 +4,8 @@ import (
         "net/http"
 
         "github.com/gorilla/mux"
-        "github.com/nikhil-prabhu/dynosurveys-backend/controllers"
         "github.com/nikhil-prabhu/dynosurveys-backend/auth"
+        "github.com/nikhil-prabhu/dynosurveys-backend/controllers"
 )
 
 // Handlers defines and returns a router object

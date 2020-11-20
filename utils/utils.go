@@ -1,16 +1,16 @@
 package utils
 
 import (
+        "context"
         "log"
         "os"
-        "context"
 
         "github.com/jinzhu/gorm"
         _ "github.com/jinzhu/gorm/dialects/postgres"
-        "go.mongodb.org/mongo-driver/mongo"
-        "go.mongodb.org/mongo-driver/mongo/options"
         "github.com/joho/godotenv"
         "github.com/nikhil-prabhu/dynosurveys-backend/models"
+        "go.mongodb.org/mongo-driver/mongo"
+        "go.mongodb.org/mongo-driver/mongo/options"
 )
 
 // NewPostgreClient connects to a PostgreSQL database

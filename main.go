@@ -8,9 +8,9 @@ import (
         "syscall"
 
         "github.com/joho/godotenv"
-        "github.com/nikhil-prabhu/dynosurveys-backend/utils"
-        "github.com/nikhil-prabhu/dynosurveys-backend/routes"
         "github.com/nikhil-prabhu/dynosurveys-backend/controllers"
+        "github.com/nikhil-prabhu/dynosurveys-backend/routes"
+        "github.com/nikhil-prabhu/dynosurveys-backend/utils"
 )
 
 func main() {
