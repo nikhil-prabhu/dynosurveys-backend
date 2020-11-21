@@ -39,13 +39,15 @@ func main() {
 }
 
 // handleInterrupts handles server termination
-// in a somewhat graceful way. It handles the
-// SIGINT and SIGTERM signals.
+// in a somewhat graceful way.
 func handleInterrupts() {
-        // Channel to notify about received signal
-        ch := make(chan os.Signal)
+        // Channel to notify about received signal.
+        // We use a buffered channel to make sure
+        // that it's ready to receive when a signal
+        // is sent
+        ch := make(chan os.Signal, 1)
         // Notify received signal
-        signal.Notify(ch, os.Interrupt, syscall.SIGTERM)
+        signal.Notify(ch)
 
         // Goroutine that blocks till signal is
         // received on channel
