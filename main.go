@@ -5,7 +5,6 @@ import (
         "net/http"
         "os"
         "os/signal"
-        "syscall"
 
         "github.com/joho/godotenv"
         "github.com/nikhil-prabhu/dynosurveys-backend/controllers"
