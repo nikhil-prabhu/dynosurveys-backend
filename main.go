@@ -52,6 +52,9 @@ func handleInterrupts() {
         go func() {
                 <-ch
                 log.Println("Server terminated. Exiting...")
+                // Ensure that DB connections are closed before exiting
+                utils.ClosePostgreClient(controllers.PDB)
+                utils.CloseMongoClient(controllers.MDB, controllers.Ctx)
                 os.Exit(0)
         }()
 }
