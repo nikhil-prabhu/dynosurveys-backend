@@ -1,15 +1,16 @@
 package main
 
 import (
-        "log"
-        "net/http"
-        "os"
-        "os/signal"
+	"fmt"
+	"log"
+	"net/http"
+	"os"
+	"os/signal"
 
-        "github.com/joho/godotenv"
-        "github.com/nikhil-prabhu/dynosurveys-backend/controllers"
-        "github.com/nikhil-prabhu/dynosurveys-backend/routes"
-        "github.com/nikhil-prabhu/dynosurveys-backend/utils"
+	"github.com/joho/godotenv"
+	"github.com/nikhil-prabhu/dynosurveys-backend/controllers"
+	"github.com/nikhil-prabhu/dynosurveys-backend/routes"
+	"github.com/nikhil-prabhu/dynosurveys-backend/utils"
 )
 
 func main() {
@@ -22,7 +23,8 @@ func main() {
         defer utils.CloseMongoClient(controllers.MDB, controllers.Ctx)
 
         // Load environment
-        err := godotenv.Load()
+        homeDir, _ := os.UserHomeDir()
+        err := godotenv.Load(fmt.Sprintf("%s/%s", homeDir, ".env"))
         if err != nil {
                 log.Fatalln(err)
         }

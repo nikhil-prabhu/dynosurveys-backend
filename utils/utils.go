@@ -5,6 +5,7 @@ import (
         "context"
         "log"
         "os"
+        "fmt"
 
         "github.com/jinzhu/gorm"
         _ "github.com/jinzhu/gorm/dialects/postgres" // Register postgres as a dialect
@@ -18,7 +19,8 @@ import (
 // and returns the connection object.
 func NewPostgreClient() *gorm.DB {
         // Load PostgreSQL database URI from environment
-        err := godotenv.Load()
+        homeDir, _ := os.UserHomeDir()
+        err := godotenv.Load(fmt.Sprintf("%s/%s", homeDir, ".env"))
         if err != nil {
                 log.Fatalln(err)
         }
@@ -42,7 +44,8 @@ func NewPostgreClient() *gorm.DB {
 // the context.
 func NewMongoClient() (*mongo.Client, *context.Context) {
         // Load Mongo database URI from environment
-        err := godotenv.Load()
+        homeDir, _ := os.UserHomeDir()
+        err := godotenv.Load(fmt.Sprintf("%s/%s", homeDir, ".env"))
         if err != nil {
                 log.Fatalln(err)
         }
