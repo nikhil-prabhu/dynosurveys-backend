@@ -6,6 +6,7 @@ import (
 	"net/http"
 	"os"
 	"os/signal"
+	"syscall"
 
 	"github.com/joho/godotenv"
 	"github.com/nikhil-prabhu/dynosurveys-backend/controllers"
@@ -40,7 +41,8 @@ func main() {
 }
 
 // handleInterrupts handles server termination
-// in a somewhat graceful way.
+// in a somewhat graceful way. It handles the
+// SIGINT and SIGTERM signals.
 func handleInterrupts() {
         // Channel to notify about received signal.
         // We use a buffered channel to make sure
@@ -48,7 +50,7 @@ func handleInterrupts() {
         // is sent
         ch := make(chan os.Signal, 1)
         // Notify received signal
-        signal.Notify(ch)
+        signal.Notify(ch, os.Interrupt, syscall.SIGTERM)
 
         // Goroutine that blocks till signal is
         // received on channel
